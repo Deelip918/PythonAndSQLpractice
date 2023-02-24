@@ -1,0 +1,21 @@
+1.https://leetcode.com/problems/calculate-special-bonus/?envType=study-plan&id=sql-i
+Write an SQL query to calculate the bonus of each employee. The bonus of an employee is 100% of their salary if the ID of the employee is an odd number and the employee name does not start with the character 'M'. The bonus of an employee is 0 otherwise.
+
+solution :
+select employee_id,
+case 
+when employee_id%2!=0.0 and name not like ('M%') then salary else 0 end as bonus
+from Employees
+order by employee_id
+
+2.https://leetcode.com/problems/swap-salary/description/?envType=study-plan&id=sql-i
+
+Write an SQL query to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temporary tables.
+
+update Salary set sex=(case sex when 'm' then 'f' else 'm' end)
+
+3.
+https://leetcode.com/problems/delete-duplicate-emails/description/?envType=study-plan&id=sql-i
+Write an SQL query to delete all the duplicate emails, keeping only one unique email with the smallest id. Note that you are supposed to write a DELETE statement and not a SELECT one.
+
+ delete from person where id not in (select min(id) from person group by email)
