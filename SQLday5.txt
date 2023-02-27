@@ -1,0 +1,27 @@
+--Q1. https://leetcode.com/problems/article-views-i/?envType=study-plan&id=sql-i
+
+--Write an SQL query to find all the authors that viewed at least one of their own articles.
+Return the result table sorted by id in ascending order.
+select distinct id
+from
+(select author_id as id
+from views
+where author_id=viewer_id) as c
+order by id asc
+
+--Q2. https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/?envType=study-plan&id=sql-i
+--Write a SQL query to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+
+select customer_id,count(Visits.visit_id) AS count_no_trans
+from visits
+left join Transactions on Visits.visit_id = Transactions.visit_id
+where Transactions.visit_id IS NULL
+GROUP BY customer_id
+
+--Q3.https://leetcode.com/problems/rising-temperature/description/?envType=study-plan&id=sql-i
+--Write an SQL query to find all dates' Id with higher temperatures compared to its previous dates (yesterday).
+select id
+from
+(select id ,temperature ,recordDate,lag(recordDate) over(order by recordDate asc) preDate,lag(temperature) over(order by recordDate asc) pretemp
+from Weather) as a
+where temperature>pretemp and datediff(day,preDate,recordDate)=1
