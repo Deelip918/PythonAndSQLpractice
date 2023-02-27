@@ -1,0 +1,28 @@
+Q1 https://leetcode.com/problems/valid-parentheses/solutions/
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        while s:
+            orilen=len(s)
+            s=s.replace('()','')
+            s=s.replace('{}','')
+            s=s.replace('[]','')
+            if orilen==len(s):
+                return False
+        return True
+
+Q2. https://leetcode.com/problems/search-insert-position/solutions/
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        start = 0
+        end = len(nums)-1
+        while start <= end:
+            mid = (start + end)//2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                end = mid - 1
+            else:
+                start = mid + 1
+        return end+1

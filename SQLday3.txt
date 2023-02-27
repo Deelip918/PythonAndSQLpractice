@@ -1,0 +1,41 @@
+1.https://leetcode.com/problems/fix-names-in-a-table/description/?envType=study-plan&id=sql-i
+Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase.
+
+solution :
+select user_id,concat(upper(substring(name,1,1)),lower(substring(name,2,10))) as name
+from users
+order by user_id
+
+2.https://leetcode.com/problems/patients-with-a-condition/description/?envType=study-plan&id=sql-i
+Write an SQL query to report the patient_id, patient_name and conditions of the patients who have Type I Diabetes. Type I Diabetes always starts with DIAB1 prefix.
+
+select *
+from Patients
+where conditions like ('% DIAB1%') or conditions like 'DIAB1%';
+
+3.
+https://leetcode.com/problems/employees-with-missing-information/?envType=study-plan&id=sql-i
+Write an SQL query to report the IDs of all the employees with missing information. The information of an employee is missing if:
+
+The employee's name is missing, or
+The employee's salary is missing.
+Return the result table ordered by employee_id in ascending order.
+
+select coalesce (e.employee_id,s.employee_id) as employee_id
+from employees e
+full outer join salaries s on e.employee_id=s.employee_id
+where salary is null or name is null
+order by employee_id
+
+4.
+https://leetcode.com/problems/rearrange-products-table/description/?envType=study-plan&id=sql-i
+Write an SQL query to rearrange the Products table so that each row has (product_id, store, price). If a product is not available in a store, do not include a row with that product_id and store combination in the result table.
+
+select product_id,store,price
+from 
+(select product_id,store1,store2,store3
+from products ) p
+UNPIVOT
+(
+  Store FOR price IN (store1,store2,store3)
+) as unpvt
