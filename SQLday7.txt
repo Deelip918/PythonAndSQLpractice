@@ -1,0 +1,11 @@
+--https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/description/?envType=study-plan&id=sql-i
+
+--Write an SQL query to find the customer_number for the customer who has placed the largest number of orders.
+
+select top 1 customer_number
+from
+(select customer_number, count(order_number) as cout
+from Orders
+group by customer_number
+) as subquery
+order by cout desc
