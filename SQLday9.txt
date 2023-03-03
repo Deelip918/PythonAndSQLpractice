@@ -1,0 +1,27 @@
+Q1--https://leetcode.com/problems/top-travellers/description/?envType=study-plan&id=sql-i
+--Return the result table ordered by travelled_distance in descending order, if two or more users traveled the same distance, order them by their name in ascending order.
+
+with cte as (select user_id,sum(distance) as travelled_distance
+from Rides
+group by user_id)
+select name,coalesce(travelled_distance,0) as travelled_distance
+from Users
+left join cte on users.id=cte.user_id
+order by travelled_distance desc,name
+
+Q2--https://leetcode.com/problems/duplicate-emails/description/?envType=study-plan&id=sql-i
+--Write an SQL query to report all the duplicate emails. Note that it's guaranteed that the email field is not NULL.
+select email
+from 
+(select email,count(email) as c
+ from Person
+ group by email
+ having c>1) as ds  --[Every derived table must have its own alias]
+ 
+ Q3---https://leetcode.com/problems/market-analysis-i/?envType=study-plan&id=sql-i
+--Write an SQL query to find for each user, the join date and the number of orders they made as a buyer in 2019.
+select user_id as buyer_id ,join_date,count(o.item_id) as orders_in_2019
+from Users u
+left join Orders o on u.user_id=o.buyer_id and year(order_date)='2019'
+group by u.user_id,join_date
+
